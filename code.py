@@ -13,19 +13,6 @@ morse_code = {
     '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.'
 }
 
-#get the unit time (0-1 second) entered by the user and ensure that the input is valid
-def get_time():
-    while True:  # use while loop until the user enters a correct value
-        try:
-            unit_time = float(input('Enter the length of a unit (0-1s): '))
-            if 0 <= unit_time <= 1:  # checks if the input value is between 0 and 1
-                return unit_time  # if valid, returns the unit time
-            else:
-                print('Value must be 0-1. Please try again.')  # if invalid, let the user to re-enter
-        except ValueError:
-            print('Invalid input. ')  ##if the input is a non-numeric, let the user to re-enter
-
-
 # convert the sentence to lowercase and remove any character without a Morse code equivalent
 def filter_input(text):
     text = text.lower()  # convert the sentence to lowercase
@@ -36,7 +23,6 @@ def filter_input(text):
         elif char == ' ':
             cleaned_text = cleaned_text + char  # if it is a space, it is also appended to cleaned_text
     return cleaned_text  # return the filtered sentences
-
 
 # convert a sentence entered by the user into a list of Morse codes
 def convert_to_morse(text):
@@ -51,11 +37,34 @@ def convert_to_morse(text):
 
     return morse_list[:-1]  # return the Morse code list, removing the last extra /
 
+#get the unit time (0-1 second) entered by the user and ensure that the input is valid
+def get_time():
+    while True:  # use while loop until the user enters a correct value
+        try:
+            unit_time = float(input('Enter the length of a unit (0-1s): '))
+            if 0 <= unit_time <= 1:  # checks if the input value is between 0 and 1
+                return unit_time  # if valid, returns the unit time
+            else:
+                print('Value must be 0-1. Please try again.')  # if invalid, let the user to re-enter
+        except ValueError:
+            print('Invalid input. ')  #if the input is a non-numeric, let the user to re-enter
 
-# accepts two parameters
+#get the GRB value (0-255) entered by the user and ensure that the input is valid
+def get_color():
+    while True:     # use while loop until the user enters a correct value
+        try:
+            red = int(input('Please enter the red value (0-255): '))
+            green = int(input('Please enter the green value (0-255): '))
+            blue = int(input('Please enter the blue value (0-255): '))
+            if 0 <= red <= 255 and 0 <= green <= 255 and 0 <= blue <= 255:  # checks if the input value is between 0 and 255
+                return (red, green, blue)  # if valid, returns the RGB value
+            else:
+                print('Values must be 0-255. Please try again.')   # if invalid, let the user to re-enter
+        except ValueError:
+            print('Invalid input. Please enter numbers.')   #if the input is a non-numeric, let the user to re-enter
+
+# accepts two parameters to control LED lights to display Morse code flashing effect
 def play_morse(morse_list, unit_time):
-    color = (0, 25, 0)  # set the LED light color to green
-
     for code in morse_list:  # loop over each morse code in morse_list
         if code == '/':
             cp.pixels.fill((0, 0, 0))  # turn off all LED lights
@@ -78,6 +87,7 @@ def play_morse(morse_list, unit_time):
 
 if __name__ == '__main__':
     unit_time = get_time()  # call the get_time function to get the unit time entered by the user
+    color = get_color()     # call the get_color function to get the RGB value entered by the user
     sentence = input('Please enter a sentence: ')  # let the user enter a sentence
     morse_list = convert_to_morse(sentence)  # call the convert_to_morse function to convert the sentence into a list of Morse code
     print('Morse Code:', morse_list)  # print Morse code list
