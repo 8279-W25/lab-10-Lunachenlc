@@ -42,3 +42,29 @@ def convert_to_morse(text):
 sentence = input('Please enter a sentence: ')      #let the user enter a sentence
 morse_list = convert_to_morse(sentence)       #call the convert_to_morse function to convert the sentence into a list of Morse code
 print('Morse Code:', morse_list)              #print Morse code list
+
+#get the unit time (0-1 second) entered by the user and ensure that the input is valid
+def get_time():
+    while True:  # use while loop until the user enters a correct value
+        try:
+            unit_time = float(input('Enter the length of a unit (0-1s): '))
+            if 0 <= unit_time <= 1:  # checks if the input value is between 0 and 1
+                return unit_time  # if valid, returns the unit time
+            else:
+                print('Value must be 0-1. Please try again.')  # if invalid, let the user to re-enter
+        except ValueError:
+            print('Invalid input. ')  #if the input is a non-numeric, let the user to re-enter
+
+#get the GRB value (0-255) entered by the user and ensure that the input is valid
+def get_color():
+    while True:     # use while loop until the user enters a correct value
+        try:
+            red = int(input('Please enter the red value (0-255): '))
+            green = int(input('Please enter the green value (0-255): '))
+            blue = int(input('Please enter the blue value (0-255): '))
+            if 0 <= red <= 255 and 0 <= green <= 255 and 0 <= blue <= 255:  # checks if the input value is between 0 and 255
+                return (red, green, blue)  # if valid, returns the RGB value
+            else:
+                print('Values must be 0-255. Please try again.')   # if invalid, let the user to re-enter
+        except ValueError:
+            print('Invalid input. Please enter numbers.')   #if the input is a non-numeric, let the user to re-enter
